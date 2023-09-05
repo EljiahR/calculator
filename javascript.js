@@ -43,12 +43,54 @@ function getButtonValue(e){
             case 'C':
                 displayValue = '';
                 resultDisplay.innerText = '';
+                num1 = NaN;
+                num2 = NaN;
+                break;
+            case '+':
+            case '-':
+            case '*':
+            case '/':
+                
+                if(operator === '='){
+                    operator = this.innerText;
+                    num2 = parseFloat(displayValue);
+                    displayValue = '';
+                    resultDisplay.innerHTML = '';
+                    break;
+                }
+                operator = this.innerText;
+                if(!isNaN(num1) && !isNaN(num2)){
+                    num1 = operate(num1, operator, num2);
+                    resultDisplay.innerText = num1;
+                    displayValue = '';
+                    num2 = NaN;
+                }else if(!isNaN(num1)){
+                    num2 = parseFloat(displayValue);
+                    num1 = operate(num1, operator, num2);
+                    resultDisplay.innerText = num1;
+                    displayValue = '';
+                    num2 = NaN;
+                }else{
+                    num1 = parseFloat(displayValue);
+                    displayValue = '';
+                }
+                break;
+            case '=':
+                num2 = parseFloat(displayValue);
+                num1 = operate(num1, operator, num2);
+                resultDisplay.innerText = num1;
+                displayValue = num1;
+                num2 = NaN;
+                operator = this.innerText;
         }
 
     };
 };
 
 let displayValue = "";
+let num1 = NaN;
+let num2 = NaN;
+let operator = "";
 const resultDisplay = document.querySelector('#result-screen');
 const allButtons = document.querySelectorAll('.calculator-button');
 allButtons.forEach(button => {
