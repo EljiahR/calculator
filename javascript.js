@@ -14,11 +14,6 @@ function divide(a, b){
     return a / b;
 };
 
-
-let num1;
-let operator;
-let num2;
-
 function operate(num1, operator, num2){
     switch(operator){
         case "+":
@@ -33,3 +28,29 @@ function operate(num1, operator, num2){
             return "Error: Unknown operator";
     };
 };
+
+function getButtonValue(e){
+    if(!isNaN(parseInt(this.innerText))){
+        displayValue += this.innerText;
+        resultDisplay.innerText = displayValue;
+    } else if(this.innerText === '.'){
+        if(!displayValue.includes('.')){
+            displayValue += this.innerText;
+            resultDisplay.innerText = displayValue;
+        }
+    }else{
+        switch(this.innerText){
+            case 'C':
+                displayValue = '';
+                resultDisplay.innerText = '';
+        }
+
+    };
+};
+
+let displayValue = "";
+const resultDisplay = document.querySelector('#result-screen');
+const allButtons = document.querySelectorAll('.calculator-button');
+allButtons.forEach(button => {
+    button.addEventListener('click', getButtonValue);
+});
