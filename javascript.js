@@ -50,38 +50,43 @@ function getButtonValue(e){
             case '-':
             case '*':
             case '/':
-                
+                num2 = parseFloat(displayValue);
                 if(operator === '='){
                     operator = this.innerText;
                     num2 = parseFloat(displayValue);
                     displayValue = '';
-                    resultDisplay.innerHTML = '';
                     break;
                 }
-                operator = this.innerText;
+                
                 if(!isNaN(num1) && !isNaN(num2)){
                     num1 = operate(num1, operator, num2);
                     resultDisplay.innerText = num1;
                     displayValue = '';
                     num2 = NaN;
+                    operator = this.innerText;
                 }else if(!isNaN(num1)){
                     num2 = parseFloat(displayValue);
-                    num1 = operate(num1, operator, num2);
-                    resultDisplay.innerText = num1;
-                    displayValue = '';
-                    num2 = NaN;
+                    //num1 = operate(num1, operator, num2);
+                    //displayValue = '';
+                    //num2 = NaN;
+                    operator = this.innerText;
                 }else{
+                    operator = this.innerText;
                     num1 = parseFloat(displayValue);
                     displayValue = '';
                 }
                 break;
             case '=':
-                num2 = parseFloat(displayValue);
-                num1 = operate(num1, operator, num2);
-                resultDisplay.innerText = num1;
-                displayValue = num1;
-                num2 = NaN;
-                operator = this.innerText;
+                if(!isNaN(num1) && !isNaN(num2)){
+                    num2 = parseFloat(displayValue);
+                    num1 = operate(num1, operator, num2);
+                    resultDisplay.innerText = num1;
+                    displayValue = '';
+                    num2 = NaN;
+                    operator = this.innerText;
+                    break;
+                };
+                break;
         }
 
     };
