@@ -23,7 +23,11 @@ function operate(num1, operator, num2){
         case "*":
             return multiply(num1, num2);
         case "/":
-            return divide(num1, num2);
+            if(num2 === 0){
+                return 'Bruh';
+            } else {
+                return divide(num1, num2);
+            };
         default:
             return "Error: Unknown operator";
     };
@@ -39,8 +43,14 @@ function getButtonValue(e){
             resultDisplay.innerText = displayValue;
         }
     }else{
+        num2 = parseFloat(displayValue);
         switch(this.innerText){
             case 'C':
+                displayValue = '';
+                resultDisplay.innerText = '';
+                num2 = NaN;
+                break;
+            case 'AC':
                 displayValue = '';
                 resultDisplay.innerText = '';
                 num1 = NaN;
@@ -50,7 +60,7 @@ function getButtonValue(e){
             case '-':
             case '*':
             case '/':
-                num2 = parseFloat(displayValue);
+                
                 if(operator === '='){
                     operator = this.innerText;
                     num2 = parseFloat(displayValue);
@@ -91,6 +101,9 @@ function getButtonValue(e){
 
     };
 };
+function getKeyValue(e){
+    console.log(e.code);
+};
 
 let displayValue = "";
 let num1 = NaN;
@@ -101,3 +114,4 @@ const allButtons = document.querySelectorAll('.calculator-button');
 allButtons.forEach(button => {
     button.addEventListener('click', getButtonValue);
 });
+window.addEventListener('keypress', getKeyValue);
